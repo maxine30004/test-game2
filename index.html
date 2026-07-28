@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Who Is Your Soul Character?</title>
+  <meta name="description" content="Take the quiz and discover the character who shares your soul.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--gold:#d9b35f;--light:#ffe69b;--line:#6e5226;--black:#050504}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050504;color:#f4ead4}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button{font:inherit;cursor:pointer}.serif{font-family:Baskerville,"Palatino Linotype","Book Antiqua",Georgia,serif}
+    .shell{min-height:100svh;background:radial-gradient(circle at 15% 30%,#5e350f55,transparent 28%),radial-gradient(circle at 84% 20%,#9b5d1528,transparent 30%),#050504}
+    .game{position:relative;width:min(100%,560px);min-height:100svh;margin:auto;overflow:hidden;background:radial-gradient(circle at 50% -10%,#7b4a172e,transparent 38%),linear-gradient(#090704,#030302);box-shadow:0 0 80px #000}
+    .screen{min-height:100svh}.gold{color:#ecd086;text-shadow:0 0 12px #d9982538}.muted{color:#cbbda6}
+    .divider{display:flex;align-items:center;justify-content:center;gap:10px;color:#ebc76d;font-size:10px}.divider i{width:58px;height:1px;background:linear-gradient(90deg,transparent,#b2873b)}.divider i:last-child{background:linear-gradient(90deg,#b2873b,transparent)}
+    .gold-btn{min-height:52px;padding:0 28px;border:1px solid #f2cf78;border-radius:999px;color:#1e1206;background:linear-gradient(#f8dc8a,#c88b2b 50%,#f3c86a);box-shadow:inset 0 1px #fff3bf,0 0 20px #d59a323d;font-family:Baskerville,Georgia,serif;font-size:19px;font-weight:700}
+    .gold-btn:disabled{opacity:.38;cursor:not-allowed}.gold-btn:hover:not(:disabled){filter:brightness(1.1)}
+    #home{display:flex;flex-direction:column;text-align:center;padding:32px 24px 50px}
+    .hero{position:relative;height:52vh;min-height:390px}.moon{position:absolute;right:-55px;top:-30px;width:205px;height:205px;border-radius:50%;background:radial-gradient(circle at 36% 32%,#fff5c8,#d38a24 40%,#5c3206 70%);box-shadow:0 0 45px #e6a22e66}
+    .fan{position:absolute;left:50%;top:70px;width:46%;height:76%;overflow:hidden;border:1px solid #d3a64a;border-radius:48% 48% 10px 10px;transform:translateX(-50%);box-shadow:0 0 30px #000}.fan img{width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+    .fan.a{transform:translateX(-88%) rotate(-16deg);opacity:.66}.fan.b{z-index:3}.fan.c{transform:translateX(-12%) rotate(16deg);opacity:.68}
+    #quiz{padding:22px 22px 40px}.back{position:absolute;left:18px;top:12px;color:#dcb865;font-size:38px;line-height:1;background:none;border:0}
+    .pill{width:max-content;margin:auto;padding:7px 25px;border:1px solid #83632e;border-radius:99px;color:#d9b967;font-family:Baskerville,Georgia,serif;letter-spacing:.08em}
+    .track{height:5px;border-radius:99px;background:#251e12;overflow:visible}.bar{position:relative;height:100%;border-radius:inherit;background:linear-gradient(90deg,#8b561d,#f0c465,#ffe8a2);box-shadow:0 0 10px #d69b36;transition:width .3s}.bar:after{content:"";position:absolute;right:-4px;top:-3px;width:11px;height:11px;border-radius:50%;background:#ffe6a0;box-shadow:0 0 10px #ffc85c}
+    .answers{display:grid;gap:12px;margin-top:32px}.answer{width:100%;min-height:94px;display:grid;grid-template-columns:76px 44px 1fr;align-items:center;gap:7px;padding:7px 16px 7px 7px;text-align:left;color:#dfca9a;background:linear-gradient(90deg,#291c0da8,#0a0906ef);border:1px solid #72572f;border-radius:10px}.answer:hover,.answer.selected{border-color:#edc46c;box-shadow:inset 0 0 25px #d8952c2d,0 0 14px #d89c3638}
+    .answer-art{width:72px;height:78px;border-radius:7px;background:radial-gradient(circle at 50% 28%,#ffe8a4 0 2%,#7e5a22 3%,transparent 24%),linear-gradient(145deg,#080807,#573914 58%,#0c0a06);position:relative;overflow:hidden}.answer-art:after{content:"";position:absolute;left:25px;bottom:-5px;width:27px;height:49px;border-radius:50% 50% 0 0;background:#070706;box-shadow:0 0 16px #b97d29}
+    .letter{width:36px;height:36px;display:grid;place-items:center;border:1px solid #bd8c39;border-radius:50%;font-family:Baskerville,Georgia,serif;font-size:20px;color:#efcf7a}.answer.selected .letter{box-shadow:0 0 15px #d99d38}
+    #loading{display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:44px 28px;text-align:center}.energy{position:relative;width:270px;height:270px;display:grid;place-items:center}.orbit{position:absolute;inset:20px;border:1px solid #d4a54a;border-right-color:transparent;border-radius:50%;box-shadow:0 0 22px #b9772c;animation:spin 4s linear infinite}.orbit.two{inset:45px;border-right-color:#d4a54a;border-left-color:transparent;animation-duration:2.8s;animation-direction:reverse}.star{font-size:75px;color:#ffe6a0;text-shadow:0 0 26px #dd9825;animation:pulse 1.4s infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.08);filter:brightness(1.3)}}
+    #result{position:relative;background:#000;min-height:100svh}.result-img{display:block;width:100%;height:auto;user-select:none}.match{position:absolute;left:64.35%;top:27.15%;width:22.3%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#f7d980;background:radial-gradient(circle,#020201 0 61%,#020201f5 71%,transparent 72%);font-family:Baskerville,"Palatino Linotype",Georgia,serif;text-shadow:0 0 8px #ffcd5f59;pointer-events:none}.match strong{font-size:clamp(32px,10.5vw,62px);font-weight:400;line-height:1}.match span{margin-top:15%;font-size:clamp(15px,4vw,25px)}
+    .hot{position:absolute;border:0;background:transparent;border-radius:10px}.hot:focus-visible{outline:2px solid #ffe096;outline-offset:-2px;background:#ffd05b14}.hot:hover{background:#ffca460b}.hot-back{left:1.2%;top:.4%;width:8%;height:4.2%}.hot-share{right:1.1%;top:.4%;width:8%;height:4.2%}.hot-d1{left:57%;top:56.6%;width:28%;height:4.1%}.hot-d2{left:57%;top:69.8%;width:28%;height:4.1%}.hot-video{left:7.7%;top:79.4%;width:84.5%;height:15.8%}
+    .toast{position:fixed;left:50%;bottom:22px;z-index:50;transform:translateX(-50%) translateY(20px);padding:10px 18px;border:1px solid #9b7434;border-radius:99px;background:#100d08ed;color:#ecd187;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    [hidden]{display:none!important}@media(min-width:760px){.game{margin-block:24px;min-height:calc(100svh - 48px);border:1px solid #dcae5133;border-radius:14px}.screen{min-height:calc(100svh - 48px)}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <section class="game">
+    <div id="home" class="screen">
+      <div class="hero">
+        <div class="moon"></div>
+        <div class="fan a"><img src="soul-character-assets/result-pages/ceo-female.png" alt=""></div>
+        <div class="fan b"><img src="soul-character-assets/result-pages/werewolf-male.png" alt=""></div>
+        <div class="fan c"><img src="soul-character-assets/result-pages/romance-female.png" alt=""></div>
+      </div>
+      <div class="mt-auto relative z-10">
+        <p class="serif text-[11px] tracking-[.22em] text-[#d2b15f]">A GOODSHORT SOUL EXPERIENCE</p>
+        <div class="divider mt-3"><i></i>✦<i></i></div>
+        <h1 class="serif gold text-[3.35rem] sm:text-[4rem] leading-[.94] mt-3">Who Is Your<br>Soul Character?</h1>
+        <p class="muted max-w-sm mx-auto mt-5 text-sm leading-6">Take the quiz to discover the character who shares your soul—and unlock your exclusive story.</p>
+        <button id="start" class="gold-btn w-full max-w-xs mt-8">Take the Quiz ✦</button>
+        <p class="mt-5 text-[10px] tracking-[.28em] text-[#8d7954]">5 QUESTIONS · 1 UNFORGETTABLE MATCH</p>
+      </div>
+    </div>
+
+    <div id="quiz" class="screen" hidden>
+      <button id="quizBack" class="back" aria-label="Return to home">‹</button>
+      <div class="pill">QUESTION PAGE</div>
+      <div class="mt-8 text-center">
+        <p id="questionCount" class="serif text-sm text-[#d9bc7b]"></p>
+        <div class="track mt-4"><div id="questionBar" class="bar"></div></div>
+      </div>
+      <div class="mt-12">
+        <div class="divider"><i></i>✦<i></i></div>
+        <h2 id="questionTitle" class="serif gold text-center text-[2.25rem] sm:text-[2.7rem] leading-[1.05] mt-5"></h2>
+        <div id="answers" class="answers"></div>
+        <div class="flex gap-4 mt-8">
+          <button id="previous" class="gold-btn flex-1" hidden>Previous</button>
+          <button id="done" class="gold-btn flex-1" hidden disabled>Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loading" class="screen" hidden>
+      <div><div class="divider"><i></i>✦<i></i></div><h2 class="serif gold text-[2rem] mt-4">Your Result Is Almost Ready</h2></div>
+      <div class="energy"><div class="orbit"></div><div class="orbit two"></div><div class="star">✦</div></div>
+      <div class="w-full"><p class="serif gold text-[1.6rem] leading-snug">Your choices are shaping a story written only for you.</p><div class="track mt-8"><div id="loadingBar" class="bar"></div></div><p id="loadingValue" class="serif text-lg text-[#dcb96c] mt-3">0%</p></div>
+      <div class="w-full border border-[#684d25] rounded-lg p-4 text-left text-xs text-[#cbbfa8]">✦ &nbsp; There are no right or wrong answers—only the character that reflects you best.</div>
+    </div>
+
+    <div id="result" class="screen" hidden>
+      <img id="resultImage" class="result-img" alt="Soul character quiz result">
+      <div id="matchValue" class="match"></div>
+      <button id="resultBack" class="hot hot-back" aria-label="Return to home"></button>
+      <button id="share" class="hot hot-share" aria-label="Share result"></button>
+      <button class="hot hot-d1 download" aria-label="Download app for full analysis"></button>
+      <button class="hot hot-d2 download" aria-label="Download app for full story"></button>
+      <button id="video" class="hot hot-video" aria-label="Play related short drama"></button>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast"></div>
+
+<script>
+  const questions=[
+    {title:"What drives you forward when life becomes difficult?",options:[["Protecting the people who depend on me.","Werewolf"],["Building something powerful and successful.","CEO"],["Proving that people underestimated me.","Underdog"]]},
+    {title:"How would you handle a serious conflict?",options:[["Fight for the relationship instead of walking away.","Romance"],["Trust my instincts and defend my inner circle.","Werewolf"],["Stay composed and regain control of the situation.","CEO"]]},
+    {title:"Which story journey feels most satisfying?",options:[["Rising from failure and shocking everyone with my comeback.","Underdog"],["Finding someone who changes the way I see love.","Romance"],["Turning ambition into influence, status, and power.","CEO"]]},
+    {title:"Which life would you most like to experience?",options:[["Leading a powerful pack in a world ruled by fate and loyalty.","Werewolf"],["Starting with nothing and fighting my way to the top.","Underdog"],["Living through a love story that changes both people forever.","Romance"]]},
+    {title:"Which character would you rather become?",options:[["A male character.","male"],["A female character.","female"],["Surprise me.","auto"]]}
+  ];
+  const images={
+    Werewolf:{male:"werewolf-male.png",female:"werewolf-female.png"},
+    CEO:{male:"ceo-male.png",female:"ceo-female.png"},
+    Underdog:{male:"underdog-male.png",female:"underdog-female.png"},
+    Romance:{male:"romance-male.png",female:"romance-female.png"}
+  };
+  const screens=["home","quiz","loading","result"],order=["Werewolf","CEO","Underdog","Romance"];
+  let index=0,answers=[null,null,null,null,null],timer=null,playing=false;
+  const $=id=>document.getElementById(id);
+  function show(id){screens.forEach(name=>$(name).hidden=name!==id);window.scrollTo({top:0,behavior:"smooth"})}
+  function toast(message){$("toast").textContent=message;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1800)}
+  function start(){answers=[null,null,null,null,null];index=0;renderQuestion();show("quiz")}
+  function renderQuestion(){
+    const q=questions[index];
+    $("questionCount").textContent=`Question ${index+1} of 5`;
+    $("questionBar").style.width=`${(index+1)*20}%`;
+    $("questionTitle").textContent=q.title;
+    $("answers").innerHTML=q.options.map((option,i)=>`<button class="answer ${answers[index]===i?"selected":""}" data-answer="${i}"><span class="answer-art"></span><span class="letter">${"ABC"[i]}</span><span class="serif text-[16px] leading-snug">${option[0]}</span></button>`).join("");
+    document.querySelectorAll("[data-answer]").forEach(button=>button.onclick=()=>select(Number(button.dataset.answer)));
+    $("previous").hidden=index===0;$("done").hidden=index!==4;$("done").disabled=answers[4]===null;
+  }
+  function select(value){
+    answers[index]=value;renderQuestion();
+    if(index<4)setTimeout(()=>{index++;renderQuestion()},650);
+  }
+  function calculate(){
+    const scores={Werewolf:0,CEO:0,Underdog:0,Romance:0};
+    answers.slice(0,4).forEach((answer,q)=>scores[questions[q].options[answer][1]]++);
+    const top=Math.max(...Object.values(scores)),tied=order.filter(type=>scores[type]===top);
+    let type=tied[0];
+    for(let q=3;q>=0;q--){const candidate=questions[q].options[answers[q]][1];if(tied.includes(candidate)){type=candidate;break}}
+    let gender=answers[4]===0?"male":"female";
+    if(answers[4]===2){const sum=answers.slice(0,4).reduce((total,value)=>total+value+1,0);gender=sum%2===1?"male":"female"}
+    const shape=Object.values(scores).sort((a,b)=>b-a).join("-");
+    const ranges={"3-1-0-0":[92,99],"2-1-1-0":[82,91],"2-2-0-0":[72,81],"1-1-1-1":[60,71]};
+    const [min,max]=ranges[shape]||[82,91],key=answers.join("-"),hash=[...key].reduce((sum,char)=>sum+char.charCodeAt(0)*7,0);
+    return{type,gender,match:min+(hash%(max-min+1))};
+  }
+  function loadResult(){
+    show("loading");let progress=0;$("loadingBar").style.width="0%";$("loadingValue").textContent="0%";
+    clearInterval(timer);timer=setInterval(()=>{progress=Math.min(100,progress+2);$("loadingBar").style.width=progress+"%";$("loadingValue").textContent=progress+"%";if(progress===100){clearInterval(timer);setTimeout(renderResult,180)}},60);
+  }
+  function renderResult(){
+    const result=calculate();
+    $("resultImage").src=`soul-character-assets/result-pages/${images[result.type][result.gender]}`;
+    $("resultImage").alt=`${result.type} ${result.gender} soul character result`;
+    $("matchValue").innerHTML=`<strong>${result.match}</strong><span>%</span>`;
+    show("result");
+  }
+  $("start").onclick=start;$("quizBack").onclick=() => show("home");$("resultBack").onclick=()=>show("home");
+  $("previous").onclick=()=>{if(index>0){index--;renderQuestion()}};
+  $("done").onclick=loadResult;
+  document.querySelectorAll(".download").forEach(button=>button.onclick=()=>toast("GoodShort download link would open here."));
+  $("share").onclick=async()=>{if(navigator.share){try{await navigator.share({title:document.title,text:"Discover your soul character!",url:location.href})}catch{}}else toast("Share link copied");};
+  $("video").onclick=()=>{playing=!playing;toast(playing?"Playing related short":"Video paused")};
+</script>
+</body>
+</html>
