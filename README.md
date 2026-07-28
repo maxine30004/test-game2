@@ -1,2 +1,2 @@
-# test-game2
-GS导流测试游戏网页
+# test-game
+导流测试游戏网页
